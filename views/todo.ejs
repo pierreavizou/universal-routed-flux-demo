@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Universal Flux Todo Application with Reactjs and React Router.</title>
+		<link rel="stylesheet" href="../todomvc-common/base.css">
+		<link rel="stylesheet" href="../css/app.css">
+	</head>
+	<body>
+		<script type="text/javascript">
+			window.App = <%-todos%>;
+			window.HOST = '<%-host%>';
+		</script>
+
+		<div id="todoappcontainer"><%-todoapp%></div>
+
+		<script src="/build/shared.js" type="text/javascript"></script>
+		<script src="/build/bundle.js" type="text/javascript"></script>
+	</body>
+</html>
