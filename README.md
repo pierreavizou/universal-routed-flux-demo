@@ -14,6 +14,8 @@ It combines the following notions in a full-featured example:
 * Multi-store application
 * Asynchronous server communication with visual feedback
 
+![Visual feedback](https://raw.githubusercontent.com/pierreavizou/universal-routed-flux-demo/master/feedback.gif)
+
 ## Purpose
 
 This example app is here in the hope that it will help people getting started building great apps that use these recent technologies.
@@ -26,7 +28,7 @@ The first thing you should do is clone the repo.
 Then, `cd`into the project folder and run `npm install`.
 This will download all the dependencies.
 
-Finally, all you have to do is run `node entrypoint.js` or `npm start`. 
+Finally, all you have to do is run `node entrypoint.js` or `npm start`.
 
 ## Notes
 
