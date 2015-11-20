@@ -1,8 +1,8 @@
 # Universal Flux example with React and React-Router
 
-The code in this repo is intended for people who want to get started building universal flux applications, with modern and exciting technologies such as Reactjs, React Router and es6.
+The code in this repo is intended for people who want to get started building universal flux applications, with modern and exciting technologies such as [React](https://facebook.github.io/react/), [React Router](https://github.com/rackt/react-router/) and [es6](https://github.com/ericdouglas/ES6-Learning).
 
-It consists of an example Todo Application built with flux and inspired by the Facebook Flux tutorial.
+It consists of an example Todo Application built with flux and inspired by the [Facebook Flux tutorial](https://facebook.github.io/flux/docs/todo-list.html).
 
 The app has been rewritten to be fully universal (or ~~isomorphic~~), use es6, React Router, have a log component and provide asynchronous server communication.
 
@@ -26,7 +26,7 @@ The first thing you should do is clone the repo.
 Then, `cd`into the project folder and run `npm install`.
 This will download all the dependencies.
 
-Finally, all you have to do is run `node entrypoint.js`.
+Finally, all you have to do is run `node entrypoint.js` or `npm start`. 
 
 ## Notes
 
