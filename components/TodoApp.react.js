@@ -3,6 +3,7 @@ import Header from './Header.react';
 import MainSection from './MainSection.react';
 import React from 'react';
 import TodoStore from '../flux-infra/stores/TodoStore';
+import TodoActions from '../flux-infra/actions/TodoActions';
 import {Link} from 'react-router';
 
 /**
@@ -24,7 +25,7 @@ export default class TodoApp extends React.Component{
 
     componentDidMount(){
         TodoStore.addChangeListener(this._onChange);
-        TodoStore.initSocket(); // We initialize the websocket connection as soon as the TodoApp component has mounted
+        TodoActions.initSocket(); // We initialize the websocket connection as soon as the TodoApp component has mounted
     }
 
     componentWillUnmount(){

@@ -40,7 +40,7 @@ function updateAll(updates){
 }
 
 function updateStateOnServerSuccess(id){
-    console.log('todo reçue par le serveur : ' + id);
+    console.log('server received todo: ' + id);
     _todos[id].pending = false;
 }
 
@@ -64,29 +64,30 @@ function destroyCompleted(){
     }
 }
 
-class TodoStore extends EventEmitter {
-    constructor(){
-        super();
-    }
-
-    initSocket(){
-        console.log('socket initialisée');
-        socket.on('todoreceived', function(id){
-            TodoActions.updateSuccess(id);
+function initSocket(){
+    socket.on('todoreceived', function(id){
+        TodoActions.updateSuccess(id);
+    });
+    socket.on('tododeleted', function(id){
+        TodoActions.deleteSuccess(id);
+    });
+    socket.on('servererror', function(err){
+        AppDispatcher.dispatch({
+            actionType: 'SERVER_ERROR',
+            text: err
         });
-        socket.on('tododeleted', function(id){
-            TodoActions.deleteSuccess(id);
-        });
-        socket.on('servererror', function(err){
-            AppDispatcher.dispatch({
-                actionType: 'SERVER_ERROR',
-                text: err
-            });
-        });
+    });
+    socket.on('connected', function(){
         AppDispatcher.dispatch({
             actionType: 'SOCKET_CONNECTED',
             text: window.HOST || 'localhost:3000'
         });
+    });
+}
+
+class TodoStore extends EventEmitter {
+    constructor(){
+        super();
     }
 
     areAllComplete(){
@@ -120,6 +121,10 @@ var todoStoreObj = new TodoStore();
 todoStoreObj.dispatchToken = AppDispatcher.register(function(action) {
     var text;
     switch(action.actionType) {
+        case 'INIT_SOCKET':
+            initSocket();
+            break;
+
         case 'READ_SUCCESS':
             receiveTodos(action.todos);
             todoStoreObj.emitChange();

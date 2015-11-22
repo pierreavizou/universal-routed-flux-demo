@@ -5,23 +5,11 @@ const TodoActions = {
 
     /**
      * Action fired when the TodoApp component has successfully mounted.
-     * Sets up event listeners to respond to successes or failures from the server and dispateches
-     * appropriate payload to let the app know it's been connected to the server.
+     * Dispatches an action to the stores so that the TodoStore can init the connection. 
      */
     initSocket: function(){
-        console.log('socket initialisée');
-        socket.on('todoreceived', function(id){
-            setTimeout(function(){
-                this.updateSuccess(id);
-            }, 2000);
-        });
-        socket.on('tododeleted', function(id){
-            setTimeout(function(){
-                this.deleteSuccess(id);
-            }, 2000);
-        });
         AppDispatcher.dispatch({
-            actionType: 'SOCKET_CONNECTED'
+            actionType: 'INIT_SOCKET'
         });
     },
 

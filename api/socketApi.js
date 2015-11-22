@@ -5,6 +5,7 @@ var initApi = function(server, todoStorageService){
     io.sockets.on('connection', function(socket){
 
         console.log('A new client connected to the server');
+        socket.emit('connected');
 
         socket.on('todoupdate', function(todo){
             console.log('new todo item received: ' + todo);
@@ -25,7 +26,7 @@ var initApi = function(server, todoStorageService){
             var jTodo = JSON.parse(todo);
             todoStorageService.delete(jTodo.id, function(err){
                 if(err !== null){
-                    console.log('Errer: ' + err);
+                    console.log('Error: ' + err);
                     socket.emit('servererror', JSON.stringify(err));
                     return;
                 }
