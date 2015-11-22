@@ -121,11 +121,11 @@ var todoStoreObj = new TodoStore();
 todoStoreObj.dispatchToken = AppDispatcher.register(function(action) {
     var text;
     switch(action.actionType) {
-        case 'INIT_SOCKET':
+        case TodoConstants.INIT_SOCKET:
             initSocket();
             break;
 
-        case 'READ_SUCCESS':
+        case TodoConstants.READ_SUCCESS:
             receiveTodos(action.todos);
             todoStoreObj.emitChange();
             break;

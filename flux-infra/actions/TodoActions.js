@@ -5,11 +5,11 @@ const TodoActions = {
 
     /**
      * Action fired when the TodoApp component has successfully mounted.
-     * Dispatches an action to the stores so that the TodoStore can init the connection. 
+     * Dispatches an action to the stores so that the TodoStore can init the connection.
      */
     initSocket: function(){
         AppDispatcher.dispatch({
-            actionType: 'INIT_SOCKET'
+            actionType: TodoConstants.INIT_SOCKET
         });
     },
 
@@ -21,7 +21,7 @@ const TodoActions = {
 
     sendTodos: function(todos, callback){
         AppDispatcher.dispatch({
-            actionType: 'READ_SUCCESS',
+            actionType: TodoConstants.READ_SUCCESS,
             todos:todos,
         });
         callback();
