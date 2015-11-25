@@ -9,6 +9,10 @@
   },
   "author": "Pierre Avizou",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pierreavizou/universal-routed-flux-demo.git"
+  },
   "dependencies": {
     "babel": "^5.8.23",
     "babelify": "^6.3.0",
