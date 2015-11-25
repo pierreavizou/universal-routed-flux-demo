@@ -22,7 +22,7 @@ const TodoActions = {
     sendTodos: function(todos, callback){
         AppDispatcher.dispatch({
             actionType: TodoConstants.READ_SUCCESS,
-            todos:todos,
+            todos:todos
         });
         callback();
     },

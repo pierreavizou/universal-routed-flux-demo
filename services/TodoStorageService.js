@@ -1,11 +1,13 @@
 var fs = require('fs');
-const RESPONSE_TIME = 300; //simulate server delay
+//simulate server delay
+const RESPONSE_TIME = 300;
 
 export default class TodoStorageService {
     constructor(storePath = __dirname + '/todos.json') {
         console.log('storage service initialised');
         this._todos = {};
-        this.storePath = storePath;    }
+        this.storePath = storePath;
+    }
     write(todo, cb){
         this._todos[todo.id] = todo;
         setTimeout(() => {
@@ -35,7 +37,6 @@ export default class TodoStorageService {
                 cb(err);
             });
         }, RESPONSE_TIME);
-    }
-}
+    }}
 
 export default new TodoStorageService();

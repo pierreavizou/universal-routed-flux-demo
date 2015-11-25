@@ -182,7 +182,7 @@ todoStoreObj.dispatchToken = AppDispatcher.register(function(action) {
         break;
 
         case TodoConstants.TODO_DESTROY_COMPLETED:
-            console.log("destroyCompleted");
+            console.log('destroyCompleted');
             destroyCompleted();
             todoStoreObj.emitChange();
             break;

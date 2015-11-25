@@ -47,10 +47,8 @@ AppDispatcher.register(function(payload){
         logStoreObj.emitChange();
         return;
     }
-    else{
         addLog(payload.actionType, payload.text || payload.id);
         logStoreObj.emitChange();
-    }
     //addLog(payload.actionType);
 });
 

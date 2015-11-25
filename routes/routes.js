@@ -3,11 +3,12 @@ import { Router, Route} from 'react-router/umd/ReactRouter';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import createMemoryHistory from 'history/lib/createMemoryHistory';
 
+var history;
 if (typeof(window) !== 'undefined'){
-    var history = createBrowserHistory();
+    history = createBrowserHistory();
 }
-else{
-    var history = createMemoryHistory(); //This kind of history is needed for server-side rendering.
+else {
+    history = createMemoryHistory(); //This kind of history is needed for server-side rendering.
 }
 
 import TodoApp from '../components/TodoApp.react';
