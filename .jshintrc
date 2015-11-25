@@ -1,0 +1,11 @@
+{
+    "esnext": true,
+    "undef": true,
+    "unused": true,
+    "devel": true,
+    "node": true,
+    "curly": true,
+    "freeze": true,
+    "latedef": true,
+    "eqeqeq": true
+}
