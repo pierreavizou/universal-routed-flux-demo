@@ -1,5 +1,4 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import TodoConstants from '../constants/TodoConstants';
 
 var LogActions = {
     clearLogs: function(){
@@ -7,6 +6,6 @@ var LogActions = {
             actionType: 'LOG_DELETE'
         });
     }
-}
+};
 
 module.exports = LogActions;

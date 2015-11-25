@@ -5,7 +5,6 @@ import browserify from 'browserify-middleware';
 import http from 'http';
 import TodoActions from './flux-infra/actions/TodoActions';
 import TodoStorageService from './services/TodoStorageService';
-import babelify from 'babelify';
 import {match, RoutingContext} from 'react-router';
 import routes from './routes/routes';
 import initApi from './api/socketApi';

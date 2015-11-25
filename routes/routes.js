@@ -1,9 +1,7 @@
 import React from 'react';
-import { Router, Route, IndexRoute, Link } from 'react-router/umd/ReactRouter';
+import { Router, Route} from 'react-router/umd/ReactRouter';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import createMemoryHistory from 'history/lib/createMemoryHistory';
-
-import useBaseName from 'history';
 
 if (typeof(window) !== 'undefined'){
     var history = createBrowserHistory();

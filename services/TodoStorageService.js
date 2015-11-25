@@ -24,7 +24,7 @@ export default class TodoStorageService {
                 }
                 this._todos = JSON.parse(data);
                 cb(null, this._todos);
-            }, RESPONSE_TIME)
+            }, RESPONSE_TIME);
         });
     }
 

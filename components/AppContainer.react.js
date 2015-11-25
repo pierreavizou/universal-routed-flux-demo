@@ -19,6 +19,6 @@ export default class AppContainer extends React.Component{
                 <div>
                     {this.props.children || nav}
                 </div>
-        )
+        );
     }
 }

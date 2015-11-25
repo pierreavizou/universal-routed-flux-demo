@@ -1,3 +1,4 @@
+/* jshint browser: true */
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import {EventEmitter} from 'events';
 import TodoConstants from '../constants/TodoConstants';

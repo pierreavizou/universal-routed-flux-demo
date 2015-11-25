@@ -1,6 +1,5 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import {EventEmitter} from 'events';
-import TodoStore from './TodoStore';
 
 var CHANGE_EVENT = 'change';
 

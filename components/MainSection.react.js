@@ -19,7 +19,7 @@ export default class MainSection extends React.Component {
         var todos = [];
 
         for (var key in allTodos) {
-            todos.push(<TodoItem key={key} todo={allTodos[key]} pending={allTodos[key].pending} />);
+            todos.push(<TodoItem key={key} todo={allTodos[key]} />);
         }
 
         return (
@@ -44,4 +44,4 @@ export default class MainSection extends React.Component {
 MainSection.PropTypes = {
     allTodos: ReactPropTypes.object.isRequired,
     areAllComplete: ReactPropTypes.bool.isRequired
-}
+};

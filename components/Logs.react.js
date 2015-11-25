@@ -22,7 +22,7 @@ export default class LogDiv extends React.Component {
     }
 
     componentWillUnmount(){
-        LogStore.removeChangeListener(this._onChange)
+        LogStore.removeChangeListener(this._onChange);
     }
 
     _onChange(){
@@ -38,7 +38,7 @@ export default class LogDiv extends React.Component {
 
         for (var i = this.state.logs.length - 1; i >= 0; i--) {
             logs.push(<li key={i}>{this.state.logs[i]}</li>);
-        };
+        }
         return (
             <div>
                 <ul>
@@ -46,7 +46,7 @@ export default class LogDiv extends React.Component {
                 </ul>
                 {clearButton}
             </div>
-        )
+        );
     }
 
     _clearLogs(){

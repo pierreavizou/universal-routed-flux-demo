@@ -38,7 +38,7 @@ export default class TodoItem extends React.Component {
                 className={classNames({
                     'completed': todo.complete,
                     'editing': this.state.isEditing,
-                    'pending': this.props.pending
+                    'pending': todo.pending
                 })}
                 key={todo.id}>
                 <div className="view">

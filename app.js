@@ -1,8 +1,7 @@
-import React from 'react';
+/* jshint browser: true */
 import ReactDOM from 'react-dom';
 
 import TodoActions from './flux-infra/actions/TodoActions';
-
 import routes from './routes/routes';
 
 // This action dispatches the READ_SUCCESS action to the store along with the data.
