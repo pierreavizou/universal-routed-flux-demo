@@ -7,7 +7,7 @@ import routes from './routes/routes';
 // It then executes the callback passed as the second parameter.
 // Here, it renders the app and mounts it to the appropriate component.
 // Dispatching this action both client- and server-side is necessary as it
-// ensures that both will render the same markup beceause they have the same data.
+// ensures that both will render the same markup because they have the same data.
 TodoActions.sendTodos(window.App, function(){
     ReactDOM.render(
         routes,
