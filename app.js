@@ -1,4 +1,3 @@
-/* jshint browser: true */
 import ReactDOM from 'react-dom';
 
 import TodoActions from './flux-infra/actions/TodoActions';
