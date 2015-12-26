@@ -5,6 +5,7 @@ import React from 'react';
 import TodoStore from '../flux-infra/stores/TodoStore';
 import TodoActions from '../flux-infra/actions/TodoActions';
 import {Link} from 'react-router';
+import {Container} from 'flux/utils';
 
 /**
  * Retrieve the current TODO data from the TodoStore
@@ -16,24 +17,23 @@ function getTodoState() {
   };
 }
 
-export default class TodoApp extends React.Component{
+class TodoApp extends React.Component{
     constructor(props){
         super(props);
         this.state = getTodoState();
-        this._onChange = this._onChange.bind(this);
+    }
+
+    static getStores() {
+        return [TodoStore];
+    }
+
+    static calculateState(){
+        return getTodoState();
     }
 
     componentDidMount(){
-        TodoStore.addChangeListener(this._onChange);
-        TodoActions.initSocket(); // We initialize the websocket connection as soon as the TodoApp component has mounted
-    }
-
-    componentWillUnmount(){
-        TodoStore.removeChangeListener(this._onChange);
-    }
-
-    _onChange(){
-        this.setState(getTodoState());
+        // We initialize the websocket connection as soon as the TodoApp component has mounted
+        TodoActions.initSocket();
     }
 
     render(){
@@ -54,3 +54,4 @@ export default class TodoApp extends React.Component{
         );
     }
 }
+export default Container.create(TodoApp, {pure: false});
