@@ -12,5 +12,7 @@ module.exports = keyMirror({
     TODO_SERVER_SUCCESS: null,
     TODO_DELETE_SERVER_SUCCESS: null,
     READ_SUCCESS: null,
-    INIT_SOCKET: null
+    INIT_SOCKET: null,
+    SOCKET_CONNECTED: null,
+    SERVER_ERROR: null
 });

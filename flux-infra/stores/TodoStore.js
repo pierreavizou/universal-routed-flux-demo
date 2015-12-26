@@ -73,16 +73,10 @@ function initSocket(){
         TodoActions.deleteSuccess(id);
     });
     socket.on('servererror', function(err){
-        AppDispatcher.dispatch({
-            actionType: 'SERVER_ERROR',
-            text: err
-        });
+        TodoActions.serverError(err);
     });
     socket.on('connected', function(){
-        AppDispatcher.dispatch({
-            actionType: 'SOCKET_CONNECTED',
-            text: window.HOST || 'localhost:3000'
-        });
+        TodoActions.serverConnected(window.HOST || 'localhost:3000');
     });
 }
 

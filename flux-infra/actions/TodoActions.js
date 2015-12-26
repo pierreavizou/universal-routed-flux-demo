@@ -114,6 +114,20 @@ const TodoActions = {
         AppDispatcher.dispatch({
             actionType: TodoConstants.TODO_DESTROY_COMPLETED
         });
+    },
+
+    serverConnected: function(text){
+        AppDispatcher.dispatch({
+            actionType: TodoConstants.SOCKET_CONNECTED,
+            text: text
+        });
+    },
+
+    serverError: function(err){
+        AppDispatcher.dispatch({
+            actionType: TodoConstants.SERVER_ERROR,
+            text: err
+        });
     }
 };
 
