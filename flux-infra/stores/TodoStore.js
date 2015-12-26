@@ -1,15 +1,16 @@
 /* jshint browser: true */
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import {EventEmitter} from 'events';
+// import {EventEmitter} from 'events';
 import TodoConstants from '../constants/TodoConstants';
 import TodoActions from '../actions/TodoActions';
+import {Store} from 'flux/utils';
 
 //connect to server only if the code is executed client-side.
 if(typeof window !== 'undefined'){
     var socket = require('socket.io-client')(window.HOST || 'localhost:3000', {transports: ['websocket']});
 }
 
-var CHANGE_EVENT = 'change';
+// var CHANGE_EVENT = 'change';
 
 var _todos = {};
 
@@ -80,9 +81,9 @@ function initSocket(){
     });
 }
 
-class TodoStore extends EventEmitter {
-    constructor(){
-        super();
+class TodoStore extends Store {
+    constructor(dispatcher){
+        super(dispatcher);
     }
 
     areAllComplete(){
@@ -98,92 +99,79 @@ class TodoStore extends EventEmitter {
         return _todos;
     }
 
-    emitChange(){
-        this.emit(CHANGE_EVENT);
-    }
+    __onDispatch(action) {
+        var text;
+        switch(action.actionType) {
+            case TodoConstants.INIT_SOCKET:
+                initSocket();
+                break;
 
-    addChangeListener(callback){
-        this.on(CHANGE_EVENT, callback);
-    }
+            case TodoConstants.READ_SUCCESS:
+                receiveTodos(action.todos);
+                this.__emitChange();
+                break;
 
-    removeChangeListener(callback) {
-        this.removeListener(CHANGE_EVENT, callback);
+            case TodoConstants.TODO_CREATE:
+                text = action.text.trim();
+                if (text !== '') {
+                    create(text);
+                    this.__emitChange();
+                }
+                break;
+
+            case TodoConstants.TODO_SERVER_SUCCESS:
+                updateStateOnServerSuccess(action.id);
+                this.__emitChange();
+                break;
+
+            case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
+                if (this.areAllComplete()) {
+                    updateAll({complete: false});
+                } else {
+                    updateAll({complete: true});
+                }
+                this.__emitChange();
+                break;
+
+            case TodoConstants.TODO_UNDO_COMPLETE:
+                update(action.id, {complete: false});
+                this.__emitChange();
+                break;
+
+            case TodoConstants.TODO_COMPLETE:
+                update(action.id, {complete: true});
+                this.__emitChange();
+                break;
+
+            case TodoConstants.TODO_UPDATE_TEXT:
+                text = action.text.trim();
+                if (text !== '') {
+                    update(action.id, {text: text});
+                    this.__emitChange();
+                }
+                break;
+
+            case TodoConstants.TODO_DESTROY:
+                destroy(action.id);
+                this.__emitChange();
+                break;
+
+            case TodoConstants.TODO_DELETE_SERVER_SUCCESS:
+            destroyWhenCompleteOnServer(action.id);
+            this.__emitChange();
+            break;
+
+            case TodoConstants.TODO_DESTROY_COMPLETED:
+                console.log('destroyCompleted');
+                destroyCompleted();
+                this.__emitChange();
+                break;
+
+            default:
+            // no op
+        }
     }
 }
 
-var todoStoreObj = new TodoStore();
-// Register callback to handle all updates
-todoStoreObj.dispatchToken = AppDispatcher.register(function(action) {
-    var text;
-    switch(action.actionType) {
-        case TodoConstants.INIT_SOCKET:
-            initSocket();
-            break;
-
-        case TodoConstants.READ_SUCCESS:
-            receiveTodos(action.todos);
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_CREATE:
-            text = action.text.trim();
-            if (text !== '') {
-                create(text);
-                todoStoreObj.emitChange();
-            }
-            break;
-
-        case TodoConstants.TODO_SERVER_SUCCESS:
-            updateStateOnServerSuccess(action.id);
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_TOGGLE_COMPLETE_ALL:
-            if (todoStoreObj.areAllComplete()) {
-                updateAll({complete: false});
-            } else {
-                updateAll({complete: true});
-            }
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_UNDO_COMPLETE:
-            update(action.id, {complete: false});
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_COMPLETE:
-            update(action.id, {complete: true});
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_UPDATE_TEXT:
-            text = action.text.trim();
-            if (text !== '') {
-                update(action.id, {text: text});
-                todoStoreObj.emitChange();
-            }
-            break;
-
-        case TodoConstants.TODO_DESTROY:
-            destroy(action.id);
-            todoStoreObj.emitChange();
-            break;
-
-        case TodoConstants.TODO_DELETE_SERVER_SUCCESS:
-        destroyWhenCompleteOnServer(action.id);
-        todoStoreObj.emitChange();
-        break;
-
-        case TodoConstants.TODO_DESTROY_COMPLETED:
-            console.log('destroyCompleted');
-            destroyCompleted();
-            todoStoreObj.emitChange();
-            break;
-
-        default:
-        // no op
-    }
-});
-
+var todoStoreObj = new TodoStore(AppDispatcher);
 export default todoStoreObj;
