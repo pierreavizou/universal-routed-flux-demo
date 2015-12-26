@@ -116,6 +116,10 @@ const TodoActions = {
         });
     },
 
+    /**
+     * Action fired when the connection to the server is successful
+     * @param {string} text The URL of the server we are connected to
+     */
     serverConnected: function(text){
         AppDispatcher.dispatch({
             actionType: TodoConstants.SOCKET_CONNECTED,
@@ -123,6 +127,10 @@ const TodoActions = {
         });
     },
 
+    /**
+     * Action fired when an error occurs on the server during data processing
+     * @param {string} err String describing the error encountred
+     */
     serverError: function(err){
         AppDispatcher.dispatch({
             actionType: TodoConstants.SERVER_ERROR,
