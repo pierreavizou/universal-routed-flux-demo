@@ -1,5 +1,7 @@
 # Universal Flux example with React and React-Router
 
+**UPDATE** : *On the `flux-utils`branch you will find the flux architecture implemented with Flux's bundled `flux-utils`.*
+
 The code in this repo is intended for people who want to get started building universal flux applications, with modern and exciting technologies such as [React](https://facebook.github.io/react/), [React Router](https://github.com/rackt/react-router/) and [es6](https://github.com/ericdouglas/ES6-Learning).
 
 It consists of an example Todo Application built with flux and inspired by the [Facebook Flux tutorial](https://facebook.github.io/flux/docs/todo-list.html).
