@@ -1,6 +1,7 @@
 import React from 'react';
 import LogStore from '../flux-infra/stores/LogStore';
 import LogActions from '../flux-infra/actions/LogActions';
+// import {Container} from 'flux/utils';
 
 function getLogState(){
     return LogStore.getState();
@@ -10,19 +11,17 @@ export default class LogDiv extends React.Component {
     constructor(props) {
         super(props);
         // Needed to fix markup inconsistency between client and server.
-        //TODO: fix in a more elegant way.
-        this.state = {logs: {}};
-        //needed as React does not autobind non-react method when used in es6.
+        this.state = {logs: []};
         this._onChange = this._onChange.bind(this);
     }
+
     componentDidMount(){
         console.log('logs mounted');
-        LogStore.addChangeListener(this._onChange);
+        // addListener is inherited from flux/utils/Store
+        // Will only be added client-side (componentDidMount() is not executed on the server)
+        // This is required because the server does not maintain the log state.
+        LogStore.addListener(this._onChange);
         this.setState(getLogState());
-    }
-
-    componentWillUnmount(){
-        LogStore.removeChangeListener(this._onChange);
     }
 
     _onChange(){
