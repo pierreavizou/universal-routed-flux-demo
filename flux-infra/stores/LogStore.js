@@ -1,7 +1,6 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
-import {EventEmitter} from 'events';
+import {Store} from 'flux/utils';
 
-var CHANGE_EVENT = 'change';
 
 var _logs = [];
 
@@ -15,9 +14,9 @@ function clearLogs(){
     _logs = [];
 }
 
-class LogStore extends EventEmitter{
-    constructor(){
-        super();
+class LogStore extends Store {
+    constructor(dispatcher){
+        super(dispatcher);
     }
 
     getState(){
@@ -26,30 +25,17 @@ class LogStore extends EventEmitter{
         };
     }
 
-    emitChange(){
-        this.emit(CHANGE_EVENT);
-    }
-
-    addChangeListener(callback){
-        this.on(CHANGE_EVENT, callback);
-    }
-
-    removeChangeListener(callback){
-        this.removeListener(CHANGE_EVENT, callback);
+    __onDispatch(payload){
+        if (payload.actionType === 'LOG_DELETE'){
+            clearLogs();
+            this.__emitChange();
+            return;
+        }
+            addLog(payload.actionType, payload.text || payload.id);
+            this.__emitChange();
     }
 }
 
-var logStoreObj = new LogStore();
-
-AppDispatcher.register(function(payload){
-    if (payload.actionType === 'LOG_DELETE'){
-        clearLogs();
-        logStoreObj.emitChange();
-        return;
-    }
-        addLog(payload.actionType, payload.text || payload.id);
-        logStoreObj.emitChange();
-    //addLog(payload.actionType);
-});
+var logStoreObj = new LogStore(AppDispatcher);
 
 export default logStoreObj;
