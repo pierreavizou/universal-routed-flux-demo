@@ -22,6 +22,7 @@
     "express": "^4.13.3",
     "flux": "^2.1.1",
     "history": "^1.17.0",
+    "immutable": "^3.7.6",
     "keymirror": "^0.1.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
