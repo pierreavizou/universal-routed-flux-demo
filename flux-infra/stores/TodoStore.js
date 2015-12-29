@@ -4,6 +4,7 @@ import AppDispatcher from '../dispatcher/AppDispatcher';
 import TodoConstants from '../constants/TodoConstants';
 import TodoActions from '../actions/TodoActions';
 import {Store} from 'flux/utils';
+import Immutable from 'immutable';
 
 //connect to server only if the code is executed client-side.
 if(typeof window !== 'undefined'){
@@ -12,56 +13,62 @@ if(typeof window !== 'undefined'){
 
 // var CHANGE_EVENT = 'change';
 
-var _todos = {};
+var TodoRecord = Immutable.Record({
+  id: undefined,
+  complete: false,
+  text: "",
+  pending: false
+});
+
+var _todos;
 
 function receiveTodos(todos){
-    _todos = todos;
+    // We first create a new OrderedMap to store the todos from the server
+    _todos = Immutable.OrderedMap()
+    for (var id in todos){
+        _todos = _todos.set(id, new TodoRecord(todos[id]));
+    }
 }
 
 function create(text){
     var id = (+new Date() + Math.floor(Math.random() * 999999)).toString(36);
-    _todos[id] = {
-        id: id,
-        complete: false,
-        text: text,
-        pending: true
-    };
-    socket.emit('todoupdate', JSON.stringify(_todos[id]));
+    _todos = _todos.set(id, new TodoRecord({id : id, text : text, pending:true}));
+    socket.emit('todoupdate', JSON.stringify(_todos.get(id)));
 }
 
 function update(id, updates){
-    _todos[id].pending = true;
-    _todos[id] = Object.assign({}, _todos[id], updates);
-    socket.emit('todoupdate', JSON.stringify(_todos[id]));
+    _todos = _todos.setIn([id, 'pending'], true);
+    _todos = _todos.set(id, _todos.get(id).merge(updates));
+    socket.emit('todoupdate', JSON.stringify(_todos.get(id)));
 }
 
 function updateAll(updates){
-    for (var id in _todos){
-        update(id, updates);
-    }
+    for (var id in _todos.toObject()) {
+    update(id, updates);
+  }
 }
 
 function updateStateOnServerSuccess(id){
     console.log('server received todo: ' + id);
-    _todos[id].pending = false;
+    _todos = _todos.setIn([id, 'pending'], false);
+
 }
 
 function destroy(id){
-    _todos[id].pending = true;
-    socket.emit('tododelete', JSON.stringify(_todos[id]));
-    //delete _todos[id];
+    _todos = _todos.setIn([id, 'pending'], true);
+    socket.emit('tododelete', JSON.stringify(_todos.get(id)));
 }
 
 function destroyWhenCompleteOnServer(id){
-    delete _todos[id];
+    console.log("delete success server");
+    _todos = _todos.delete(id);
 }
 
 function destroyCompleted(){
-    for (var id in _todos){
-        if(_todos[id].complete){
-            _todos[id].pending = true;
-            socket.emit('tododelete', JSON.stringify(_todos[id]));
-            //destroyWhenCompleteOnServer(_todos[id]);
+    for (var id in _todos.toObject()) {
+        if (_todos.getIn([id, 'complete'])) {
+            _todos = _todos.setIn([id, 'pending'], true);
+            socket.emit('tododelete', JSON.stringify(_todos.get(id)));
         }
     }
 }
@@ -87,8 +94,8 @@ class TodoStore extends Store {
     }
 
     areAllComplete(){
-        for (var id in _todos) {
-            if (!_todos[id].complete) {
+        for (var todo of _todos.values()) {
+            if (!todo.get('complete')) {
                 return false;
             }
         }
@@ -96,7 +103,7 @@ class TodoStore extends Store {
     }
 
     getAll(){
-        return _todos;
+        return _todos.toObject();
     }
 
     __onDispatch(action) {
