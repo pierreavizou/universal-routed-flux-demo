@@ -3,6 +3,7 @@ import TodoActions from '../flux-infra/actions/TodoActions';
 import TodoTextInput from './TodoTextInput.react';
 import classNames from 'classnames';
 var ReactPropTypes = React.PropTypes;
+var shallowCompare = require('react-addons-shallow-compare');
 
 export default class TodoItem extends React.Component {
     constructor(props) {
@@ -16,8 +17,20 @@ export default class TodoItem extends React.Component {
         this._onDestroyClick = this._onDestroyClick.bind(this);
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return shallowCompare(this, nextProps, nextState);
+    }
+
+    componentDidUpdate (prevProps) {
+        console.log(prevProps === this.props);
+        if (prevProps === this.props) return;
+
+        console.log("OK, updated node with key " + this.props.todo.id);
+    }
+
     render() {
         var todo = this.props.todo;
+        console.log(this.props);
         var input;
         if (this.state.isEditing) {
             input =
