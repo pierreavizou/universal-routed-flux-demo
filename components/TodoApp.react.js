@@ -53,4 +53,4 @@ class TodoApp extends React.Component{
         );
     }
 }
-export default Container.create(TodoApp, {pure: false});
+export default Container.create(TodoApp);
