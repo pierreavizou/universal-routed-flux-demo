@@ -24,7 +24,7 @@ var _todos;
 
 function receiveTodos(todos){
     // We first create a new OrderedMap to store the todos from the server
-    _todos = Immutable.OrderedMap()
+    _todos = Immutable.OrderedMap();
     for (var id in todos){
         _todos = _todos.set(id, new TodoRecord(todos[id]));
     }
