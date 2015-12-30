@@ -2,7 +2,7 @@ var fs = require('fs');
 //simulate server delay
 const RESPONSE_TIME = 300;
 
-export default class TodoStorageService {
+class TodoStorageService {
     constructor(storePath = __dirname + '/todos.json') {
         console.log('storage service initialised');
         this._todos = {};
