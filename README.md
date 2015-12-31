@@ -1,6 +1,6 @@
 # Universal Flux example with React and React-Router
 
-**UPDATE 2** : *On the `immutable` branch you will find the app's TodoStore implemented with Facebook's [Immutable](https://github.com/facebook/immutable-js) library. The implementation is inspired by [this one](https://github.com/MandarinConLaBarba/flux-immutable-todomvc). *
+**UPDATE 2** : *On the `immutable` branch you will find the app's TodoStore implemented with Facebook's [Immutable](https://github.com/facebook/immutable-js) library. The implementation is inspired by [this one](https://github.com/MandarinConLaBarba/flux-immutable-todomvc).*
 
 **UPDATE** : *On the `flux-utils` branch you will find the flux architecture implemented with Flux's bundled `flux/utils`.*
 
