@@ -1,7 +1,7 @@
 import React from 'react';
 import LogStore from '../flux-infra/stores/LogStore';
 import LogActions from '../flux-infra/actions/LogActions';
-// import {Container} from 'flux/utils';
+var shallowCompare = require('react-addons-shallow-compare');
 
 function getLogState(){
     return LogStore.getState();
@@ -10,9 +10,15 @@ function getLogState(){
 export default class LogDiv extends React.Component {
     constructor(props) {
         super(props);
-        // Needed to fix markup inconsistency between client and server.
-        this.state = {logs: []};
         this._onChange = this._onChange.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps, nextState) {
+        return shallowCompare(this, nextProps, nextState);
+    }
+
+    componentDidUpdate () {
+        console.log("OK, updated logs");
     }
 
     componentDidMount(){
@@ -29,19 +35,20 @@ export default class LogDiv extends React.Component {
     }
 
     render(){
-        var logs = [];
+        var logEntries = [];
         var clearButton;
-        if(this.state.logs.length > 0){
+        var logs = this.state ? this.state.logs.toJS() : [];
+        if(logs.length > 0){
             clearButton = <button id="clearLogs" type="button" onClick={this._clearLogs}>Clear logs</button>;
         }
 
-        for (var i = this.state.logs.length - 1; i >= 0; i--) {
-            logs.push(<li key={i}>{this.state.logs[i]}</li>);
+        for (var i = logs.length - 1; i >= 0; i--) {
+            logEntries.push(<li key={i}>{logs[i]}</li>);
         }
         return (
             <div>
                 <ul>
-                    {logs}
+                    {logEntries}
                 </ul>
                 {clearButton}
             </div>

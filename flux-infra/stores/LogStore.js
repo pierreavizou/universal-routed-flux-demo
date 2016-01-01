@@ -1,17 +1,18 @@
 import AppDispatcher from '../dispatcher/AppDispatcher';
 import {Store} from 'flux/utils';
+import Immutable from 'immutable';
 
 
-var _logs = [];
+var _logs = Immutable.List();
 
 function addLog(text, item) {
-    _logs.push(text + " : " + item);
+    _logs = _logs.push(text + " : " + item);
     //console.log("log ajouté.");
 }
 
 function clearLogs(){
     console.log('Clearing logs');
-    _logs = [];
+    _logs = Immutable.List();
 }
 
 class LogStore extends Store {
