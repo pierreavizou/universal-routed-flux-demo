@@ -24,13 +24,12 @@ export default class TodoItem extends React.Component {
     componentDidUpdate (prevProps) {
         console.log(prevProps === this.props);
         if (prevProps === this.props) return;
-
+        
         console.log("OK, updated node with key " + this.props.todo.id);
     }
 
     render() {
         var todo = this.props.todo;
-        console.log(this.props);
         var input;
         if (this.state.isEditing) {
             input =
