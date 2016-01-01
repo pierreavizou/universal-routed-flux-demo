@@ -17,10 +17,6 @@ export default class LogDiv extends React.Component {
         return shallowCompare(this, nextProps, nextState);
     }
 
-    componentDidUpdate () {
-        console.log("OK, updated logs");
-    }
-
     componentDidMount(){
         console.log('logs mounted');
         // addListener is inherited from flux/utils/Store
