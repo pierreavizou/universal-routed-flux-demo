@@ -9,17 +9,16 @@ export default class MainSection extends React.Component {
     }
 
     render(){
+        var allTodos = this.props.allTodos;
         // This section should be hidden by default
         // and shown when there are todos.
-        if (Object.keys(this.props.allTodos).length < 1) {
+        if (allTodos.size < 1) {
             return null;
         }
-
-        var allTodos = this.props.allTodos;
         var todos = [];
 
-        for (var key in allTodos) {
-            todos.push(<TodoItem key={key} todo={allTodos[key]} />);
+        for (var todo of allTodos.values()) {
+            todos.push(<TodoItem key={todo.get('id')} todo={todo} />);
         }
 
         return (

@@ -9,15 +9,15 @@ export default class Footer extends React.Component {
 
     render(){
         var allTodos = this.props.allTodos;
-        var total = Object.keys(allTodos).length;
+        var total = allTodos.size;
 
         if (total === 0) {
             return null;
         }
 
         var completed = 0;
-        for (var key in allTodos) {
-            if (allTodos[key].complete) {
+        for (var todo of allTodos.values()) {
+            if (todo.get('complete')) {
                 completed++;
             }
         }

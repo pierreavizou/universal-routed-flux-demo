@@ -24,7 +24,7 @@ export default class TodoItem extends React.Component {
     componentDidUpdate (prevProps) {
         console.log(prevProps === this.props);
         if (prevProps === this.props) return;
-        
+
         console.log("OK, updated node with key " + this.props.todo.id);
     }
 
@@ -36,7 +36,7 @@ export default class TodoItem extends React.Component {
             <TodoTextInput
                 className="edit"
                 onSave={this._onSave}
-                value={todo.text}
+                value={todo.get('text')}
             />;
         }
 
@@ -48,16 +48,16 @@ export default class TodoItem extends React.Component {
         return (
             <li
                 className={classNames({
-                    'completed': todo.complete,
+                    'completed': todo.get('complete'),
                     'editing': this.state.isEditing,
-                    'pending': todo.pending
+                    'pending': todo.get('pending')
                 })}
-                key={todo.id}>
+                key={todo.get('id')}>
                 <div className="view">
                     <input
                         className="toggle"
                         type="checkbox"
-                        checked={todo.complete}
+                        checked={todo.get('complete')}
                         onChange={this._onToggleComplete}
                     />
                     <label onDoubleClick={this._onDoubleClick} onTouchEnd={this._onDoubleClick}>
@@ -71,7 +71,7 @@ export default class TodoItem extends React.Component {
     }
 
     _onToggleComplete() {
-        TodoActions.toggleComplete(this.props.todo);
+        TodoActions.toggleComplete(this.props.todo.toObject());
     }
 
     _onDoubleClick() {
@@ -85,16 +85,16 @@ export default class TodoItem extends React.Component {
      * @param  {string} text
      */
     _onSave(text) {
-        if (this.props.todo.text === text){
+        if (this.props.todo.get('text') === text){
             this.setState({isEditing: false});
             return;
         }
-        TodoActions.updateText(this.props.todo.id, text);
+        TodoActions.updateText(this.props.todo.get('id'), text);
         this.setState({isEditing: false});
     }
 
     _onDestroyClick() {
-        TodoActions.destroy(this.props.todo.id);
+        TodoActions.destroy(this.props.todo.get('id'));
     }
 }
 
