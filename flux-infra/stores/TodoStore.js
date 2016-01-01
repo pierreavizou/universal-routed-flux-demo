@@ -103,7 +103,7 @@ class TodoStore extends Store {
     }
 
     getAll(){
-        return _todos.toObject();
+        return _todos;
     }
 
     __onDispatch(action) {
